@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"errors"
+)
 
 func TestInvertMatrix(t *testing.T) {
 	tables := []struct {
@@ -118,6 +121,24 @@ func TestMultiplyMatrix(t *testing.T) {
 		}
 		if total != table.expected {
 			t.Errorf("Multiply of (%s) was incorrect, got: %d, want: %d.", table.input, total, table.expected)
+		}
+	}
+}
+
+func TestNotSquareMatrix(t *testing.T) {
+	tables := []struct {
+		input [][]string
+		expected error
+	}{
+		{[][]string{{"1", "2", "3"}, {"4", "5", "6"}},
+			errors.New("matrix is not a square")},
+	}
+
+	for _, table := range tables {
+		square := isSquareMatrix(table.input)
+		
+		if square {
+			t.Errorf("Invalid squared Matrix was considered valid.")
 		}
 	}
 }
