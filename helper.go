@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"errors"
 )
 
 /*
@@ -20,7 +21,16 @@ readRequestFile : Helper to get the file from request
 	if err != nil {
 		return nil, err
 	}
+
+	if (!isSquareMatrix(records)) {
+		return nil, errors.New("matrix is not a square")
+	}
+
 	return records, nil
+}
+
+func isSquareMatrix(records [][]string) bool {
+	return (len(records[0]) == len(records))
 }
 
 /*
